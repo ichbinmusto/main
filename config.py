@@ -6,31 +6,29 @@ from pyrogram import filters
 # Load environment variables from .env file
 load_dotenv()
 
-# Telegram API credentials - Get these from the Telegram API website
-API_ID = int(getenv("API_ID"))
-API_HASH = getenv("API_HASH")
-BOT_TOKEN = getenv("BOT_TOKEN")
+API_ID = 27798659
+API_HASH = '26100c77cee02e5e34b2bbee58440f86'
+BOT_TOKEN = '6805811918:AAFN67TXzXyvzf2vGu9NcT6hI9YI0dYJzsM'
 
-# Specify where to get the following credentials
 OWNER_USERNAME = getenv("OWNER_USERNAME", "JARVIS_V2")
-BOT_USERNAME = getenv("BOT_USERNAME", "Kishu_X_Music_Bot")
-BOT_NAME = getenv("BOT_NAME", "˹𝙺ɪsʜᴜ ✘ 𝙼ᴜsɪᴄ˼")
-ASSUSERNAME = getenv("ASSUSERNAME", "Kishu_Assis")
+BOT_USERNAME = getenv("BOT_USERNAME", "AnnieMusicRobot")
+BOT_NAME = getenv("BOT_NAME", "˹𝐀ɴɴɪᴇ ✘ 𝙼ᴜsɪᴄ˼ ♪")
+ASSUSERNAME = getenv("ASSUSERNAME", "musicxannie")
 EVALOP = list(map(int, getenv("EVALOP", "6797202080").split()))
-MONGO_DB_URI = getenv("MONGO_DB_URI", None)
+MONGO_DB_URI = getenv("MONGO_DB_URI", 'mongodb+srv://AnnieV2:vps24@annienew12th.g2xya.mongodb.net/?retryWrites=true&w=majority&appName=AnnieNew12th')
 LOGGER_ID = int(getenv("LOGGER_ID", -1002014167331))
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
-# External APIs - Get these from their respective providers
-GPT_API = getenv("GPT_API")
-PLAYHT_API = getenv("PLAYHT_API")
+
+GPT_API = getenv("GPT_API", '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')
+DEEP_API = getenv("DEEP_API", '88052311-be39-4e2d-9f37-b4d18597c8c5')
 OWNER_ID = int(getenv("OWNER_ID", 7044783841))
 
 # Heroku deployment settings - Refer to Heroku documentation on how to obtain these
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/doraemon890/KISHU-X-MUSIC")
-UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
-GIT_TOKEN = getenv("GIT_TOKEN", None)
+UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "Master")
+GIT_TOKEN = getenv("GIT_TOKEN", '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')
 
 # Support and contact information - Provide your own support channels
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/JARVIS_V_SUPPORT")
@@ -52,7 +50,7 @@ TG_AUDIO_FILESIZE_LIMIT = int(getenv("TG_AUDIO_FILESIZE_LIMIT", "5242880000"))
 TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", "5242880000"))
 
 # Pyrogram session strings - You need to generate these yourself
-STRING1 = getenv("STRING_SESSION", None)
+STRING1 = getenv("STRING_SESSION", 'BQGoLIMAVZQBK1e90tu0kK4maxBBk7JLggO8dMiTaHCUIsV4tc_4DiS-Tfwxg7FV53BbkuK0w4xHeFfig9vaHD1QEuIQSCErUskThjTVdZnEG40kwuSRJ1aH4xeYHQ4-wqSSg0kfHSkXWgHm34csTO8uwco-0EAhpFlOrEIlysLWhd1zVsyhk-d5gqlxY-WUqlNWXCnp5vVXL-p6AJ3qRyZkaInVLm-IuuMPcIP4uYLOCfXYtBsw1p6kX1Lvcr7ck4dnf_-8OVQKCwRdBmJtMHAeE16lRKiSvhxlfyG_t_QhzizNWGMsBaa7qdZYmgf2K4U4Q-Xp5XnrP2Adg-yrPWOtOiqwCQAAAAGs3dgGAA')
 STRING2 = getenv("STRING_SESSION2", None)
 STRING3 = getenv("STRING_SESSION3", None)
 STRING4 = getenv("STRING_SESSION4", None)
