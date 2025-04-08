@@ -4,7 +4,6 @@ from Tune.core.git import git
 from Tune.core.userbot import Userbot
 from Tune.misc import dbb, heroku
 
-from SafoneAPI import SafoneAPI
 from .logging import LOGGER
 
 dirr()
@@ -13,7 +12,6 @@ dbb()
 heroku()
 
 app = Jarvis()
-api = SafoneAPI()
 userbot = Userbot()
 
 
