@@ -1,3 +1,4 @@
+
 import asyncio
 import os
 from datetime import datetime, timedelta
@@ -188,12 +189,19 @@ class Call:
         duration = seconds_to_min(dur)
         video = playing[0]["streamtype"] == "video"
 
-        stream = MediaStream(
-            out,
-            audio_quality=AudioQuality.MEDIUM if video else AudioQuality.STUDIO,
-            video_quality=VideoQuality.FHD_1080p if video else VideoQuality.SD_360p,
-            video_flags=(MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE),
-            ffmpeg_parameters=f"-ss {played} -to {duration}"
+        stream = (
+            MediaStream(
+                out,
+                audio_parameters=AudioQuality.HIGH,
+                video_parameters=VideoQuality.SD_480p,
+                ffmpeg_parameters=f"-ss {played} -to {duration}",
+            )
+            if playing[0]["streamtype"] == "video"
+            else MediaStream(
+                out,
+                audio_parameters=AudioQuality.HIGH,
+                ffmpeg_parameters=f"-ss {played} -to {duration}",
+            )
         )
 
         if db[chat_id][0]["file"] == file_path:
