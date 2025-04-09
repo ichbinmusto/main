@@ -463,7 +463,7 @@ class Call:
             pings.append(self.five.ping)
         return str(round(sum(pings) / len(pings), 3))
 
-    async def register_decorators(self) -> None:
+    async def decorators(self) -> None:
         """Register unified update handlers for all assistant instances."""
         assistants = [self.one, self.two, self.three, self.four, self.five]
 
