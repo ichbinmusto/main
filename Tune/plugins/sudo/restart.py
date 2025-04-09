@@ -1,7 +1,9 @@
 import asyncio
 import os
+import sys
 import shutil
 import socket
+import logging
 from datetime import datetime
 
 import urllib3
@@ -22,58 +24,72 @@ from Tune.utils.pastebin import JarvisBin
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def restart_bot():
+    """Gracefully restart the bot."""
+    os.execv(sys.executable, ['python'] + sys.argv)
 
 async def is_heroku():
     return "heroku" in socket.getfqdn()
-
 
 @app.on_message(filters.command(["getlog", "logs", "getlogs"]) & SUDOERS)
 @language
 async def log_(client, message, _):
     try:
         await message.reply_document(document="log.txt")
-    except:
+    except Exception as e:
+        logger.exception("Failed to send logs:")
         await message.reply_text(_["server_1"])
-
 
 @app.on_message(filters.command(["update", "gitpull"]) & SUDOERS)
 @language
 async def update_(client, message, _):
-    if await is_heroku():
-        if HAPP is None:
-            return await message.reply_text(_["server_2"])
     response = await message.reply_text(_["server_3"])
+
     try:
         repo = Repo()
     except GitCommandError:
         return await response.edit(_["server_4"])
     except InvalidGitRepositoryError:
         return await response.edit(_["server_5"])
-    to_exc = f"git fetch origin {config.UPSTREAM_BRANCH} &> /dev/null"
-    os.system(to_exc)
+
+    os.system(f"git fetch origin {config.UPSTREAM_BRANCH} &> /dev/null")
     await asyncio.sleep(7)
-    verification = ""
+
     REPO_ = repo.remotes.origin.url.split(".git")[0]
-    for checks in repo.iter_commits(f"HEAD..origin/{config.UPSTREAM_BRANCH}"):
-        verification = str(checks.count())
-    if verification == "":
-        return await response.edit(_["server_6"])
     updates = ""
-    ordinal = lambda format: "%d%s" % (
-        format,
-        "tsnrhtdd"[(format // 10 % 10 != 1) * (format % 10 < 4) * format % 10 :: 4],
+    commits = list(repo.iter_commits(f"HEAD..origin/{config.UPSTREAM_BRANCH}"))
+
+    if not commits:
+        return await response.edit(_["server_6"])
+
+    ordinal = lambda d: "%d%s" % (
+        d,
+        "tsnrhtdd"[(d // 10 % 10 != 1) * (d % 10 < 4) * d % 10 :: 4],
     )
-    for info in repo.iter_commits(f"HEAD..origin/{config.UPSTREAM_BRANCH}"):
-        updates += f"<b>➣ #{info.count()}: <a href={REPO_}/commit/{info}>{info.summary}</a> ʙʏ -> {info.author}</b>\n\t\t\t\t<b>➥ ᴄᴏᴍᴍɪᴛᴇᴅ ᴏɴ :</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} {datetime.fromtimestamp(info.committed_date).strftime('%b')}, {datetime.fromtimestamp(info.committed_date).strftime('%Y')}\n\n"
-    _update_response_ = "<b>ᴀ ɴᴇᴡ ᴜᴩᴅᴀᴛᴇ ɪs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ᴛʜᴇ ʙᴏᴛ !</b>\n\n➣ ᴩᴜsʜɪɴɢ ᴜᴩᴅᴀᴛᴇs ɴᴏᴡ\n\n<b><u>ᴜᴩᴅᴀᴛᴇs:</u></b>\n\n"
-    _final_updates_ = _update_response_ + updates
-    if len(_final_updates_) > 4096:
+
+    for info in commits:
+        updates += (
+            f"<b>➣ #{info.count()}: <a href={REPO_}/commit/{info}>{info.summary}</a> ʙʏ -> {info.author}</b>\n"
+            f"\t\t\t\t<b>➥ ᴄᴏᴍᴍɪᴛᴇᴅ ᴏɴ :</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} "
+            f"{datetime.fromtimestamp(info.committed_date).strftime('%b')}, "
+            f"{datetime.fromtimestamp(info.committed_date).strftime('%Y')}\n\n"
+        )
+
+    update_text = "<b>ᴀ ɴᴇᴡ ᴜᴩᴅᴀᴛᴇ ɪs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ᴛʜᴇ ʙᴏᴛ !</b>\n\n➣ ᴩᴜsʜɪɴɢ ᴜᴩᴅᴀᴛᴇs ɴᴏᴡ\n\n<b><u>ᴜᴩᴅᴀᴛᴇs:</u></b>\n\n"
+    final_text = update_text + updates
+
+    if len(final_text) > 4096:
         url = await JarvisBin(updates)
         nrs = await response.edit(
-            f"<b>ᴀ ɴᴇᴡ ᴜᴩᴅᴀᴛᴇ ɪs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ᴛʜᴇ ʙᴏᴛ !</b>\n\n➣ ᴩᴜsʜɪɴɢ ᴜᴩᴅᴀᴛᴇs ɴᴏᴡ\n\n<u><b>ᴜᴩᴅᴀᴛᴇs :</b></u>\n\n<a href={url}>ᴄʜᴇᴄᴋ ᴜᴩᴅᴀᴛᴇs</a>"
+            f"{update_text}<a href={url}>ᴄʜᴇᴄᴋ ᴜᴩᴅᴀᴛᴇs</a>",
+            disable_web_page_preview=True
         )
     else:
-        nrs = await response.edit(_final_updates_, disable_web_page_preview=True)
+        nrs = await response.edit(final_text, disable_web_page_preview=True)
+
     os.system("git stash &> /dev/null && git pull")
 
     try:
@@ -86,33 +102,20 @@ async def update_(client, message, _):
                 )
                 await remove_active_chat(x)
                 await remove_active_video_chat(x)
-            except:
-                pass
+            except Exception as e:
+                logger.warning(f"Failed to notify or remove chat {x}: {e}")
         await response.edit(f"{nrs.text}\n\n{_['server_7']}")
-    except:
-        pass
+    except Exception as e:
+        logger.exception("Failed during post-update cleanup:")
 
-    if await is_heroku():
-        try:
-            os.system(
-                f"{XCB[5]} {XCB[7]} {XCB[9]}{XCB[4]}{XCB[0]*2}{XCB[6]}{XCB[4]}{XCB[8]}{XCB[1]}{XCB[5]}{XCB[2]}{XCB[6]}{XCB[2]}{XCB[3]}{XCB[0]}{XCB[10]}{XCB[2]}{XCB[5]} {XCB[11]}{XCB[4]}{XCB[12]}"
-            )
-            return
-        except Exception as err:
-            await response.edit(f"{nrs.text}\n\n{_['server_9']}")
-            return await app.send_message(
-                chat_id=config.LOGGER_ID,
-                text=_["server_10"].format(err),
-            )
-    else:
-        os.system("pip3 install -r requirements.txt")
-        os.system(f"kill -9 {os.getpid()} && bash start")
-        exit()
-
+    # VPS RESTART LOGIC
+    os.system("pip3 install -r requirements.txt")
+    restart_bot()
 
 @app.on_message(filters.command(["restart"]) & SUDOERS)
 async def restart_(_, message):
     response = await message.reply_text("ʀᴇsᴛᴀʀᴛɪɴɢ...")
+
     ac_chats = await get_active_chats()
     for x in ac_chats:
         try:
@@ -122,16 +125,15 @@ async def restart_(_, message):
             )
             await remove_active_chat(x)
             await remove_active_video_chat(x)
-        except:
-            pass
+        except Exception as e:
+            logger.warning(f"Failed to notify or remove chat {x}: {e}")
 
-    try:
-        shutil.rmtree("downloads")
-        shutil.rmtree("raw_files")
-        shutil.rmtree("cache")
-    except:
-        pass
+    # Clean directories
+    for folder in ["downloads", "raw_files", "cache"]:
+        shutil.rmtree(folder, ignore_errors=True)
+
     await response.edit_text(
-        "» ʀᴇsᴛᴀʀᴛ ᴘʀᴏᴄᴇss sᴛᴀʀᴛᴇᴅ, ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ ғᴏʀ ғᴇᴡ sᴇᴄᴏɴᴅs ᴜɴᴛɪʟ ᴛʜᴇ ʙᴏᴛ sᴛᴀʀᴛs..."
+        "» ʀᴇsᴛᴀʀᴛ ᴘʀᴏᴄᴇss sᴛᴀʀᴛᴇᴅ, ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ ғᴏʀ ғᴇᴡ sᴇᴄᴏɴᴅs..."
     )
-    os.system(f"kill -9 {os.getpid()} && bash start")
+
+    restart_bot()
