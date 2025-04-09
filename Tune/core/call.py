@@ -112,7 +112,13 @@ class Call:
         except Exception as e:
             LOGGER(__name__).error(f"Error leaving call in force_stop_stream: {e}")
 
-    async def skip_stream(self, chat_id: int, link: str, video: Union[bool, str] = None):
+    async def skip_stream(
+        self,
+        chat_id: int,
+        link: str,
+        video: Union[bool, str] = None,
+        image: Union[bool, str] = None,
+    ):
         assistant = await group_assistant(self, chat_id)
         if video:
             stream = MediaStream(
@@ -126,7 +132,10 @@ class Call:
                 audio_parameters=AudioQuality.HIGH,
                 video_flags=MediaStream.Flags.IGNORE,
             )
-        await assistant.play(chat_id, stream)
+        await assistant.play(
+            chat_id,
+            stream,
+        )
 
     async def vc_users(self, chat_id: int):
         assistant = await group_assistant(self, chat_id)
