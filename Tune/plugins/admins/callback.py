@@ -17,12 +17,6 @@ from Tune.utils.database import (
     music_on,
     set_loop,
 )
-from pyrogram.errors import (
-    ChatAdminRequired,
-    InviteRequestSent,
-    UserAlreadyParticipant,
-    UserNotParticipant,
-)
 from Tune.utils.database import get_assistant
 from Tune.utils.decorators.language import languageCB
 from Tune.utils.formatters import seconds_to_min
@@ -39,6 +33,7 @@ from config import (
     confirmer,
     votemode,
 )
+import config
 from strings import get_string
 
 checker = {}
