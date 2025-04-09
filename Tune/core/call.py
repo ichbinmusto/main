@@ -7,7 +7,6 @@ from pyrogram import Client
 from pyrogram.errors import FloodWait
 from pyrogram.types import InlineKeyboardMarkup
 from pytgcalls import PyTgCalls
-from ntgcalls import TelegramServerError
 from pytgcalls.exceptions import NoActiveGroupCall
 from pytgcalls.types import (
     Update,
@@ -18,6 +17,8 @@ from pytgcalls.types import (
     StreamEnded,
     UpdatedGroupCallParticipant,
 )
+
+from ntgcalls import TelegramServerError
 
 import config
 from Tune import LOGGER, YouTube, app
@@ -219,7 +220,14 @@ class Call:
         await asyncio.sleep(8)
         await assistant.leave_call(config.LOGGER_ID)
 
-    async def join_call(self, chat_id, original_chat_id, link, video=False, image=None):
+    async def join_call(
+        self,
+        chat_id: int,
+        original_chat_id: int,
+        link,
+        video: Union[bool, str] = None,
+        image: Union[bool, str] = None,
+    ):
         assistant = await group_assistant(self, chat_id)
         lang = await get_lang(chat_id)
         _ = get_string(lang)
@@ -566,6 +574,5 @@ class Call:
                     LOGGER(__name__).error(
                         f"[UnifiedHandler Error] Update: {type(update).__name__} | Error: {e}"
                     )
-
 
 Jarvis = Call()
