@@ -3,7 +3,6 @@ import re
 import subprocess
 import sys
 import traceback
-from inspect import getfullargspec
 from io import StringIO
 from time import time
 
@@ -23,9 +22,9 @@ async def aexec(code, client, message):
 
 
 async def edit_or_reply(msg: Message, **kwargs):
+    # Use edit_text if the message was sent by the bot itself; otherwise, use reply.
     func = msg.edit_text if msg.from_user.is_self else msg.reply
-    spec = getfullargspec(func).args
-    await func(**{k: v for k, v in kwargs.items() if k in spec})
+    await func(**kwargs)
 
 
 @app.on_edited_message(
@@ -158,7 +157,7 @@ async def shellrunner(_, message: Message):
         code = text.split("\n")
         output = ""
         for x in code:
-            shell = re.split(""" (?=(?:[^'"]|'[^']*'|"[^"]*")*$)""", x)
+            shell = re.split(r""" (?=(?:[^'"]|'[^']*'|"[^"]*")*$)""", x)
             try:
                 process = subprocess.Popen(
                     shell,
@@ -170,7 +169,7 @@ async def shellrunner(_, message: Message):
             except Exception as err:
                 return await edit_or_reply(message, text=f"<b>ERROR :</b>\n<pre>{err}</pre>")
     else:
-        shell = re.split(""" (?=(?:[^'"]|'[^']*'|"[^"]*")*$)""", text)
+        shell = re.split(r""" (?=(?:[^'"]|'[^']*'|"[^"]*")*$)""", text)
         shell = [arg.replace('"', "") for arg in shell]
         try:
             process = subprocess.Popen(
