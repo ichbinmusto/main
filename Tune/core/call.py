@@ -121,13 +121,13 @@ class Call:
         if video:
             stream = MediaStream(
                 link,
-                audio_parameters=AudioQuality.HIGH,
-                video_parameters=VideoQuality.SD_480p,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.HD_720p,
             )
         else:
             stream = MediaStream(
                 link,
-                audio_parameters=AudioQuality.HIGH,
+                audio_parameters=AudioQuality.STUDIO,
                 video_flags=MediaStream.Flags.IGNORE,
             )
         await assistant.play(chat_id, stream)
@@ -146,14 +146,14 @@ class Call:
         if mode == "video":
             stream = MediaStream(
                 file_path,
-                audio_parameters=AudioQuality.HIGH,
-                video_parameters=VideoQuality.SD_480p,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.HD_720p,
                 ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
             )
         else:
             stream = MediaStream(
                 file_path,
-                audio_parameters=AudioQuality.HIGH,
+                audio_parameters=AudioQuality.STUDIO,
                 ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
                 video_flags=MediaStream.Flags.IGNORE,
             )
@@ -187,14 +187,14 @@ class Call:
         stream = (
             MediaStream(
                 out,
-                audio_parameters=AudioQuality.HIGH,
-                video_parameters=VideoQuality.SD_480p,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.HD_720p,
                 ffmpeg_parameters=f"-ss {played} -to {duration}",
             )
             if video
             else MediaStream(
                 out,
-                audio_parameters=AudioQuality.HIGH,
+                audio_parameters=AudioQuality.STUDIO,
                 ffmpeg_parameters=f"-ss {played} -to {duration}",
             )
         )
@@ -234,13 +234,13 @@ class Call:
         if video:
             stream = MediaStream(
                 link,
-                audio_parameters=AudioQuality.HIGH,
-                video_parameters=VideoQuality.SD_480p,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.HD_720p,
             )
         else:
             stream = MediaStream(
                 link,
-                audio_parameters=AudioQuality.HIGH,
+                audio_parameters=AudioQuality.STUDIO,
                 video_flags=MediaStream.Flags.IGNORE,
             )
         try:
@@ -306,13 +306,13 @@ class Call:
                 if video:
                     stream = MediaStream(
                         link,
-                        audio_parameters=AudioQuality.HIGH,
-                        video_parameters=VideoQuality.SD_480p,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_parameters=VideoQuality.HD_720p,
                     )
                 else:
                     stream = MediaStream(
                         link,
-                        audio_parameters=AudioQuality.HIGH,
+                        audio_parameters=AudioQuality.STUDIO,
                         video_flags=MediaStream.Flags.IGNORE,
                     )
                 try:
@@ -348,13 +348,13 @@ class Call:
                 if video:
                     stream = MediaStream(
                         file_path,
-                        audio_parameters=AudioQuality.HIGH,
-                        video_parameters=VideoQuality.SD_480p,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_parameters=VideoQuality.HD_720p,
                     )
                 else:
                     stream = MediaStream(
                         file_path,
-                        audio_parameters=AudioQuality.HIGH,
+                        audio_parameters=AudioQuality.STUDIO,
                         video_flags=MediaStream.Flags.IGNORE,
                     )
                 try:
@@ -381,13 +381,13 @@ class Call:
                 if video:
                     stream = MediaStream(
                         videoid,
-                        audio_parameters=AudioQuality.HIGH,
-                        video_parameters=VideoQuality.SD_480p,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_parameters=VideoQuality.HD_720p,
                     )
                 else:
                     stream = MediaStream(
                         videoid,
-                        audio_parameters=AudioQuality.HIGH,
+                        audio_parameters=AudioQuality.STUDIO,
                         video_flags=MediaStream.Flags.IGNORE,
                     )
                 try:
@@ -407,13 +407,13 @@ class Call:
                 if video:
                     stream = MediaStream(
                         queued,
-                        audio_parameters=AudioQuality.HIGH,
-                        video_parameters=VideoQuality.SD_480p,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_parameters=VideoQuality.HD_720p,
                     )
                 else:
                     stream = MediaStream(
                         queued,
-                        audio_parameters=AudioQuality.HIGH,
+                        audio_parameters=AudioQuality.STUDIO,
                         video_flags=MediaStream.Flags.IGNORE,
                     )
                 try:
