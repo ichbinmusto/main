@@ -112,7 +112,13 @@ class Call:
         except Exception as e:
             LOGGER(__name__).error(f"Error leaving call in force_stop_stream: {e}")
 
-    async def skip_stream(self, chat_id: int, link: str, video: Union[bool, str] = None):
+    async def skip_stream(
+        self,
+        chat_id: int,
+        link: str,
+        video: Union[bool, str] = None,
+        image: Union[bool, str] = None,
+    ):
         assistant = await group_assistant(self, chat_id)
         if video:
             stream = MediaStream(
@@ -126,7 +132,10 @@ class Call:
                 audio_parameters=AudioQuality.HIGH,
                 video_flags=MediaStream.Flags.IGNORE,
             )
-        await assistant.play(chat_id, stream)
+        await assistant.play(
+            chat_id,
+            stream,
+        )
 
     async def vc_users(self, chat_id: int):
         assistant = await group_assistant(self, chat_id)
@@ -502,7 +511,8 @@ class Call:
         @self.three.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
         @self.four.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
         @self.five.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
-        async def stream_services_handler(_, update):
+        async def stream_services_handler(client, update: ChatUpdate):
+            await _clear_(update.chat_id)
             await self.stop_stream(update.chat_id)
 
         @self.one.on_update(filters.stream_end())
@@ -524,7 +534,7 @@ class Call:
             participant = update.participant
             if participant.action not in (
                 GroupCallParticipant.Action.JOINED,
-                GroupCallParticipant.Action.LEFT
+                GroupCallParticipant.Action.LEFT,
             ):
                 return
             chat_id = update.chat_id
@@ -540,13 +550,16 @@ class Call:
                     return
                 autoend[chat_id] = {}
             else:
-                final = users + 1 if participant.action == GroupCallParticipant.Action.JOINED else users - 1
+                final = (
+                    users + 1
+                    if participant.action == GroupCallParticipant.Action.JOINED
+                    else users - 1
+                )
                 counter[chat_id] = final
                 if final == 1:
                     autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
                     return
                 autoend[chat_id] = {}
-
 
 
 Jarvis = Call()
