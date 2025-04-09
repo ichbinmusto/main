@@ -16,7 +16,7 @@ from pytgcalls.types import (
     VideoQuality,
     StreamEnded,
     GroupCallParticipant,
-    UpdatedGroupCallParticipant
+    Update,
 )
 from ntgcalls import TelegramServerError
 
@@ -497,14 +497,12 @@ class Call:
         await self.decorators()
 
     async def decorators(self):
-
         @self.one.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
         @self.two.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
         @self.three.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
         @self.four.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
         @self.five.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
-        async def stream_services_handler(client, update: ChatUpdate):
-            await _clear_(update.chat_id)
+        async def stream_services_handler(_, update):
             await self.stop_stream(update.chat_id)
 
         @self.one.on_update(filters.stream_end())
@@ -513,32 +511,42 @@ class Call:
         @self.four.on_update(filters.stream_end())
         @self.five.on_update(filters.stream_end())
         async def stream_end_handler(client, update: StreamEnded):
-            if update.stream_type != StreamEnded.Type.AUDIO:
+            if not update.stream_type == StreamEnded.Type.AUDIO:
                 return
             await self.play(client, update.chat_id)
-
 
         @self.one.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
         @self.two.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
         @self.three.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
         @self.four.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
         @self.five.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
-        async def participants_change_handler(client, update: UpdatedGroupCallParticipant):
+        async def participants_change_handler(client, update: Update):
             participant = update.participant
-
-            if participant.action not in (GroupCallParticipant.Action.JOINED, GroupCallParticipant.Action.LEFT):
+            if participant.action not in (
+                GroupCallParticipant.Action.JOINED,
+                GroupCallParticipant.Action.LEFT
+            ):
                 return
             chat_id = update.chat_id
-            try:
-                curr_count = len(await client.get_participants(chat_id))
-            except Exception as e:
-                LOGGER(__name__).error(f"Error getting participants: {e}")
-                return
-
-            if curr_count == 1:
-                autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
+            users = counter.get(chat_id)
+            if users is None:
+                try:
+                    got = len(await client.get_participants(chat_id))
+                except Exception:
+                    return
+                counter[chat_id] = got
+                if got == 1:
+                    autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
+                    return
+                autoend[chat_id] = {}
             else:
-                autoend.pop(chat_id, None)
+                final = users + 1 if participant.action == GroupCallParticipant.Action.JOINED else users - 1
+                counter[chat_id] = final
+                if final == 1:
+                    autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
+                    return
+                autoend[chat_id] = {}
+
 
 
 Jarvis = Call()
