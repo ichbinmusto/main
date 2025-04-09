@@ -53,7 +53,7 @@ async def vc_info(cli, message: Message, _, chat_id):
             except:
                 name = f"<code>{p.user_id}</code>"
 
-            mute_status = "🔇" if p.is_muted else "👤"
+            mute_status = "🔇" if p.muted else "👤"
             screen_status = "🖥️" if getattr(p, "screen_sharing", False) else ""
             volume_level = getattr(p, "volume", "N/A")
 
