@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -11,7 +10,7 @@ from Tune.utils.inline import supp_markup
 from config import BANNED_USERS, PING_VID_URL
 
 
-@app.on_message(filters.command(["alive"]) & ~BANNED_USERS)
+@app.on_message(filters.command(["ping"]) & ~BANNED_USERS)
 @language
 async def ping_com(client, message: Message, _):
     start = datetime.now()
