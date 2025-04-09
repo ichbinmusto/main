@@ -1,3 +1,4 @@
+
 import asyncio
 import os
 from datetime import datetime, timedelta
@@ -112,12 +113,18 @@ class Call:
 
     async def skip_stream(self, chat_id, link: str, video: Union[bool, str] = None):
         assistant = await group_assistant(self, chat_id)
-        stream = MediaStream(
-            link,
-            audio_quality=AudioQuality.MEDIUM if video else AudioQuality.STUDIO,
-            video_quality=VideoQuality.FHD_1080p if video else VideoQuality.SD_360p,
-            video_flags=(MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE),
-        )
+        if video:
+            stream = MediaStream(
+                link,
+                audio_parameters=AudioQuality.HIGH,
+                video_parameters=VideoQuality.SD_480p,
+            )
+        else:
+            stream = MediaStream(
+                link,
+                audio_parameters=AudioQuality.HIGH,
+                video_flags=MediaStream.Flags.IGNORE,
+            )
         await assistant.play(chat_id, stream)
 
     async def vc_users(self, chat_id):
@@ -129,15 +136,22 @@ class Call:
         assistant = await group_assistant(self, chat_id)
         await assistant.change_volume(chat_id, volume)
 
-    async def seek_stream(self, chat_id, file_path: str, to_seek: str, duration: str, video: bool):
+    async def seek_stream(self, chat_id, file_path, to_seek, duration, mode):
         assistant = await group_assistant(self, chat_id)
-        stream = MediaStream(
-            file_path,
-            audio_quality=AudioQuality.MEDIUM if video else AudioQuality.STUDIO,
-            video_quality=VideoQuality.FHD_1080p if video else VideoQuality.SD_360p,
-            video_flags=(MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE),
-            ffmpeg_parameters=f"-ss {to_seek} -to {duration}"
-        )
+        if mode == "video":
+            stream = MediaStream(
+                file_path,
+                audio_parameters=AudioQuality.HIGH,
+                video_parameters=VideoQuality.SD_480p,
+                ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
+            )
+        else:
+            stream = MediaStream(
+                file_path,
+                audio_parameters=AudioQuality.HIGH,
+                ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
+                video_flags=MediaStream.Flags.IGNORE,
+            )
         await assistant.play(chat_id, stream)
 
     async def speedup_stream(self, chat_id, file_path, speed, playing):
@@ -201,12 +215,18 @@ class Call:
         assistant = await group_assistant(self, chat_id)
         lang = await get_lang(chat_id)
         _ = get_string(lang)
-        stream = MediaStream(
-            link,
-            audio_quality=AudioQuality.MEDIUM if video else AudioQuality.STUDIO,
-            video_quality=VideoQuality.FHD_1080p if video else VideoQuality.SD_360p,
-            video_flags=(MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE),
-        )
+        if video:
+            stream = MediaStream(
+                link,
+                audio_parameters=AudioQuality.HIGH,
+                video_parameters=VideoQuality.SD_480p,
+            )
+        else:
+            stream = MediaStream(
+                link,
+                audio_parameters=AudioQuality.HIGH,
+                video_flags=MediaStream.Flags.IGNORE,
+            )
         try:
             await assistant.join_group_call(chat_id, stream)
         except NoActiveGroupCall:
@@ -270,11 +290,17 @@ class Call:
                         original_chat_id,
                         text=_["call_6"],
                     )
-                stream = MediaStream(
+                if video:
+                    stream = MediaStream(
                         link,
-                        audio_quality=AudioQuality.MEDIUM if video else AudioQuality.STUDIO,
-                        video_quality=VideoQuality.FHD_1080p if video else VideoQuality.SD_360p,
-                        video_flags=MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE,
+                        audio_parameters=AudioQuality.HIGH,
+                        video_parameters=VideoQuality.SD_480p,
+                    )
+                else:
+                    stream = MediaStream(
+                        link,
+                        audio_parameters=AudioQuality.HIGH,
+                        video_flags=MediaStream.Flags.IGNORE,
                     )
                 try:
                     await client.play(chat_id, stream)
@@ -311,11 +337,17 @@ class Call:
                     return await mystic.edit_text(
                         _["call_6"], disable_web_page_preview=True
                     )
-                stream = MediaStream(
+                if video:
+                    stream = MediaStream(
                         file_path,
-                        audio_quality=AudioQuality.MEDIUM if video else AudioQuality.STUDIO,
-                        video_quality=VideoQuality.FHD_1080p if video else VideoQuality.SD_360p,
-                        video_flags=MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE,
+                        audio_parameters=AudioQuality.HIGH,
+                        video_parameters=VideoQuality.SD_480p,
+                    )
+                else:
+                    stream = MediaStream(
+                        file_path,
+                        audio_parameters=AudioQuality.HIGH,
+                        video_flags=MediaStream.Flags.IGNORE,
                     )
                 try:
                     await client.play(chat_id, stream)
@@ -341,12 +373,18 @@ class Call:
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "stream"
             elif "index_" in queued:
-                stream = MediaStream(
-                    videoid,
-                    audio_quality=AudioQuality.MEDIUM if video else AudioQuality.STUDIO,
-                    video_quality=VideoQuality.FHD_1080p if video else VideoQuality.SD_360p,
-                    video_flags=MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE,
-                )
+                if video:
+                    stream = MediaStream(
+                        videoid,
+                        audio_parameters=AudioQuality.HIGH,
+                        video_parameters=VideoQuality.SD_480p,
+                    )
+                else:
+                    stream = MediaStream(
+                        videoid,
+                        audio_parameters=AudioQuality.HIGH,
+                        video_flags=MediaStream.Flags.IGNORE,
+                    )
                 try:
                     await client.play(chat_id, stream)
                 except:
@@ -364,12 +402,18 @@ class Call:
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
             else:
-                stream = MediaStream(
-                    queued,
-                    audio_quality=AudioQuality.MEDIUM if video else AudioQuality.STUDIO,
-                    video_quality=VideoQuality.FHD_1080p if video else VideoQuality.SD_360p,
-                    video_flags=MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE,
-                )
+                if video:
+                    stream = MediaStream(
+                        queued,
+                        audio_parameters=AudioQuality.HIGH,
+                        video_parameters=VideoQuality.SD_480p,
+                    )
+                else:
+                    stream = MediaStream(
+                        queued,
+                        audio_parameters=AudioQuality.HIGH,
+                        video_flags=MediaStream.Flags.IGNORE,
+                    )
                 try:
                     await client.play(chat_id, stream)
                 except:
