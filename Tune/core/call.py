@@ -1,4 +1,3 @@
-
 import asyncio
 import os
 from datetime import datetime, timedelta
@@ -228,7 +227,7 @@ class Call:
                 video_flags=MediaStream.Flags.IGNORE,
             )
         try:
-            await assistant.join_group_call(chat_id, stream)
+            await assistant.play(chat_id, stream)
         except NoActiveGroupCall:
             raise AssistantErr(_["call_8"])
         except TelegramServerError:
