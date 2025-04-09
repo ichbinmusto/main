@@ -27,7 +27,7 @@ async def shell_cmd(cmd):
     return out.decode("utf-8")
 
 
-cookies_file = "Tune/assets/cookies.txt"
+cookies_file = "Tune/cookies/cookies.txt"
 
 
 class YouTubeAPI:
