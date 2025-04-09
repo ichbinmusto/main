@@ -56,23 +56,6 @@ async def _clear_(chat_id):
     await set_loop(chat_id, 0)
 
 
-def create_media_stream(source, video=False, ffmpeg_params=None):
-    """
-    Helper to create a MediaStream object with consolidated parameters.
-    Uses AudioQuality.STUDIO for audio.
-    If video is True, sets VideoQuality.HD_720p with auto-detection;
-    otherwise, ignores video.
-    Optionally accepts custom ffmpeg parameters.
-    """
-    return MediaStream(
-        source,
-        audio_parameters=AudioQuality.STUDIO,
-        video_parameters=VideoQuality.HD_720p if video else None,
-        video_flags=MediaStream.Flags.AUTO_DETECT if video else MediaStream.Flags.IGNORE,
-        ffmpeg_parameters=ffmpeg_params,
-    )
-
-
 class Call:
     def __init__(self):
         self.userbot1 = Client("TuneViaAssis1", config.API_ID, config.API_HASH, session_string=str(config.STRING1))
@@ -135,7 +118,18 @@ class Call:
         image: Union[bool, str] = None,
     ):
         assistant = await group_assistant(self, chat_id)
-        stream = create_media_stream(link, video=bool(video))
+        if video:
+            stream = MediaStream(
+                link,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.HD_720p,
+            )
+        else:
+            stream = MediaStream(
+                link,
+                audio_parameters=AudioQuality.STUDIO,
+                video_flags=MediaStream.Flags.IGNORE,
+            )
         await assistant.play(chat_id, stream)
 
     async def vc_users(self, chat_id):
@@ -149,17 +143,26 @@ class Call:
 
     async def seek_stream(self, chat_id, file_path, to_seek, duration, mode):
         assistant = await group_assistant(self, chat_id)
-        stream = create_media_stream(
-            file_path,
-            video=(mode == "video"),
-            ffmpeg_params=f"-ss {to_seek} -to {duration}"
-        )
+        if mode == "video":
+            stream = MediaStream(
+                file_path,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.HD_720p,
+                ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
+            )
+        else:
+            stream = MediaStream(
+                file_path,
+                audio_parameters=AudioQuality.STUDIO,
+                ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
+                video_flags=MediaStream.Flags.IGNORE,
+            )
         await assistant.play(chat_id, stream)
 
     async def speedup_stream(self, chat_id, file_path, speed, playing):
         assistant = await group_assistant(self, chat_id)
         base = os.path.basename(file_path)
-        chatdir = os.path.join("playback", str(speed).replace(".", "_"))
+        chatdir = os.path.join("playback", speed)
         os.makedirs(chatdir, exist_ok=True)
         out = os.path.join(chatdir, base)
 
@@ -178,10 +181,23 @@ class Call:
 
         dur = int(await asyncio.get_event_loop().run_in_executor(None, check_duration, out))
         played, con_seconds = speed_converter(playing[0]["played"], speed)
-        duration_str = seconds_to_min(dur)
+        duration = seconds_to_min(dur)
         video = playing[0]["streamtype"] == "video"
 
-        stream = create_media_stream(out, video=video, ffmpeg_params=f"-ss {played} -to {duration_str}")
+        stream = (
+            MediaStream(
+                out,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.HD_720p,
+                ffmpeg_parameters=f"-ss {played} -to {duration}",
+            )
+            if video
+            else MediaStream(
+                out,
+                audio_parameters=AudioQuality.STUDIO,
+                ffmpeg_parameters=f"-ss {played} -to {duration}",
+            )
+        )
 
         if db[chat_id][0]["file"] == file_path:
             await assistant.play(chat_id, stream)
@@ -190,7 +206,7 @@ class Call:
 
         db[chat_id][0].update({
             "played": con_seconds,
-            "dur": duration_str,
+            "dur": duration,
             "seconds": dur,
             "speed_path": out,
             "speed": speed,
@@ -200,8 +216,7 @@ class Call:
 
     async def stream_call(self, link):
         assistant = await group_assistant(self, config.LOGGER_ID)
-        stream = create_media_stream(link, video=False)
-        await assistant.play(config.LOGGER_ID, stream)
+        await assistant.play(config.LOGGER_ID, MediaStream(link))
         await asyncio.sleep(8)
         await assistant.leave_call(config.LOGGER_ID)
 
@@ -216,7 +231,18 @@ class Call:
         assistant = await group_assistant(self, chat_id)
         lang = await get_lang(chat_id)
         _ = get_string(lang)
-        stream = create_media_stream(link, video=bool(video))
+        if video:
+            stream = MediaStream(
+                link,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.HD_720p,
+            )
+        else:
+            stream = MediaStream(
+                link,
+                audio_parameters=AudioQuality.STUDIO,
+                video_flags=MediaStream.Flags.IGNORE,
+            )
         try:
             await assistant.play(chat_id, stream)
         except NoActiveGroupCall:
@@ -250,11 +276,11 @@ class Call:
             if not check:
                 await _clear_(chat_id)
                 return await client.leave_call(chat_id)
-        except Exception:
+        except:
             try:
                 await _clear_(chat_id)
                 return await client.leave_call(chat_id)
-            except Exception:
+            except:
                 return
         else:
             queued = check[0]["file"]
@@ -273,12 +299,22 @@ class Call:
                 db[chat_id][0]["speed_path"] = None
                 db[chat_id][0]["speed"] = 1.0
             video = True if str(streamtype) == "video" else False
-
             if "live_" in queued:
                 n, link = await YouTube.video(videoid, True)
                 if n == 0:
                     return await app.send_message(original_chat_id, text=_["call_6"])
-                stream = create_media_stream(link, video=video)
+                if video:
+                    stream = MediaStream(
+                        link,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_parameters=VideoQuality.HD_720p,
+                    )
+                else:
+                    stream = MediaStream(
+                        link,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_flags=MediaStream.Flags.IGNORE,
+                    )
                 try:
                     await client.play(chat_id, stream)
                 except Exception:
@@ -298,7 +334,6 @@ class Call:
                 )
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
-
             elif "vid_" in queued:
                 mystic = await app.send_message(original_chat_id, _["call_7"])
                 try:
@@ -308,12 +343,23 @@ class Call:
                         videoid=True,
                         video=True if str(streamtype) == "video" else False,
                     )
-                except Exception:
+                except:
                     return await mystic.edit_text(_["call_6"], disable_web_page_preview=True)
-                stream = create_media_stream(file_path, video=video)
+                if video:
+                    stream = MediaStream(
+                        file_path,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_parameters=VideoQuality.HD_720p,
+                    )
+                else:
+                    stream = MediaStream(
+                        file_path,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_flags=MediaStream.Flags.IGNORE,
+                    )
                 try:
                     await client.play(chat_id, stream)
-                except Exception:
+                except:
                     return await app.send_message(original_chat_id, text=_["call_6"])
                 img = await get_thumb(videoid)
                 button = stream_markup(_, chat_id)
@@ -331,12 +377,22 @@ class Call:
                 )
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "stream"
-
             elif "index_" in queued:
-                stream = create_media_stream(videoid, video=video)
+                if video:
+                    stream = MediaStream(
+                        videoid,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_parameters=VideoQuality.HD_720p,
+                    )
+                else:
+                    stream = MediaStream(
+                        videoid,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_flags=MediaStream.Flags.IGNORE,
+                    )
                 try:
                     await client.play(chat_id, stream)
-                except Exception:
+                except:
                     return await app.send_message(original_chat_id, text=_["call_6"])
                 button = stream_markup(_, chat_id)
                 run = await app.send_photo(
@@ -347,12 +403,22 @@ class Call:
                 )
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
-
             else:
-                stream = create_media_stream(queued, video=video)
+                if video:
+                    stream = MediaStream(
+                        queued,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_parameters=VideoQuality.HD_720p,
+                    )
+                else:
+                    stream = MediaStream(
+                        queued,
+                        audio_parameters=AudioQuality.STUDIO,
+                        video_flags=MediaStream.Flags.IGNORE,
+                    )
                 try:
                     await client.play(chat_id, stream)
-                except Exception:
+                except:
                     return await app.send_message(original_chat_id, text=_["call_6"])
                 if videoid == "telegram":
                     button = stream_markup(_, chat_id)
@@ -408,9 +474,10 @@ class Call:
                                 user,
                             ),
                             reply_markup=InlineKeyboardMarkup(button),
-                        )
+                        )    
                     db[chat_id][0]["mystic"] = run
                     db[chat_id][0]["markup"] = "stream"
+
 
     async def start(self):
         LOGGER(__name__).info("Starting PyTgCalls Clients...")
@@ -438,6 +505,7 @@ class Call:
         if config.STRING5:
             pings.append(self.five.ping)
         return str(round(sum(pings) / len(pings), 3))
+
 
     async def decorators(self) -> None:
         """Register a unified update handler for all assistant instances."""
