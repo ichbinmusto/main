@@ -46,7 +46,6 @@ from strings import get_string
 autoend = {}
 counter = {}
 
-
 async def _clear_(chat_id):
     popped = db.pop(chat_id, None)
     if popped:
@@ -131,10 +130,7 @@ class Call:
                 audio_parameters=AudioQuality.HIGH,
                 video_flags=MediaStream.Flags.IGNORE,
             )
-        await assistant.play(
-            chat_id,
-            stream,
-        )
+        await assistant.play(chat_id, stream)
 
     async def vc_users(self, chat_id):
         assistant = await group_assistant(self, chat_id)
@@ -144,7 +140,6 @@ class Call:
     async def change_volume(self, chat_id: int, volume: int):
         assistant = await group_assistant(self, chat_id)
         await assistant.change_volume_call(chat_id, volume)
-
 
     async def seek_stream(self, chat_id, file_path, to_seek, duration, mode):
         assistant = await group_assistant(self, chat_id)
@@ -196,7 +191,7 @@ class Call:
                 video_parameters=VideoQuality.SD_480p,
                 ffmpeg_parameters=f"-ss {played} -to {duration}",
             )
-            if playing[0]["streamtype"] == "video"
+            if video
             else MediaStream(
                 out,
                 audio_parameters=AudioQuality.HIGH,
@@ -221,10 +216,7 @@ class Call:
 
     async def stream_call(self, link):
         assistant = await group_assistant(self, config.LOGGER_ID)
-        await assistant.play(
-            config.LOGGER_ID,
-            MediaStream(link),
-        )
+        await assistant.play(config.LOGGER_ID, MediaStream(link))
         await asyncio.sleep(8)
         await assistant.leave_call(config.LOGGER_ID)
 
@@ -310,10 +302,7 @@ class Call:
             if "live_" in queued:
                 n, link = await YouTube.video(videoid, True)
                 if n == 0:
-                    return await app.send_message(
-                        original_chat_id,
-                        text=_["call_6"],
-                    )
+                    return await app.send_message(original_chat_id, text=_["call_6"])
                 if video:
                     stream = MediaStream(
                         link,
@@ -329,10 +318,7 @@ class Call:
                 try:
                     await client.play(chat_id, stream)
                 except Exception:
-                    return await app.send_message(
-                        original_chat_id,
-                        text=_["call_6"],
-                    )
+                    return await app.send_message(original_chat_id, text=_["call_6"])
                 img = await get_thumb(videoid)
                 button = stream_markup(_, chat_id)
                 run = await app.send_photo(
@@ -358,9 +344,7 @@ class Call:
                         video=True if str(streamtype) == "video" else False,
                     )
                 except:
-                    return await mystic.edit_text(
-                        _["call_6"], disable_web_page_preview=True
-                    )
+                    return await mystic.edit_text(_["call_6"], disable_web_page_preview=True)
                 if video:
                     stream = MediaStream(
                         file_path,
@@ -376,10 +360,7 @@ class Call:
                 try:
                     await client.play(chat_id, stream)
                 except:
-                    return await app.send_message(
-                        original_chat_id,
-                        text=_["call_6"],
-                    )
+                    return await app.send_message(original_chat_id, text=_["call_6"])
                 img = await get_thumb(videoid)
                 button = stream_markup(_, chat_id)
                 await mystic.delete()
@@ -412,10 +393,7 @@ class Call:
                 try:
                     await client.play(chat_id, stream)
                 except:
-                    return await app.send_message(
-                        original_chat_id,
-                        text=_["call_6"],
-                    )
+                    return await app.send_message(original_chat_id, text=_["call_6"])
                 button = stream_markup(_, chat_id)
                 run = await app.send_photo(
                     chat_id=original_chat_id,
@@ -441,10 +419,7 @@ class Call:
                 try:
                     await client.play(chat_id, stream)
                 except:
-                    return await app.send_message(
-                        original_chat_id,
-                        text=_["call_6"],
-                    )
+                    return await app.send_message(original_chat_id, text=_["call_6"])
                 if videoid == "telegram":
                     button = stream_markup(_, chat_id)
                     run = await app.send_photo(
@@ -502,7 +477,7 @@ class Call:
                         )    
                     db[chat_id][0]["mystic"] = run
                     db[chat_id][0]["markup"] = "stream"
-                    
+
 
     async def start(self):
         LOGGER(__name__).info("Starting PyTgCalls Clients...")
@@ -531,30 +506,52 @@ class Call:
             pings.append(self.five.ping)
         return str(round(sum(pings) / len(pings), 3))
 
-    async def decorators(self) -> None:
-        """Register unified update handlers for all assistant instances."""
-        assistants = [self.one, self.two, self.three, self.four, self.five]
 
+    async def decorators(self) -> None:
+        """Register a unified update handler for all assistant instances."""
+        assistants = [self.one, self.two, self.three, self.four, self.five]
         for assistant in assistants:
 
             @assistant.on_update()
-            async def unified_handler(client, update: Update):
+            async def unified_update_handler(client, update: Update):
                 try:
-                    if isinstance(update, StreamEnded):
-                        LOGGER(__name__).info(f"[StreamEnded] Chat: {update.chat_id}")
+                    if isinstance(update, ChatUpdate):
+                        if ChatUpdate.Status.LEFT_CALL in update.status:
+                            LOGGER(__name__).warning(
+                                f"[ChatUpdate] Bot left or was removed from call: Chat {update.chat_id} | Status: {update.status}"
+                            )
+                            await self.stop_stream(update.chat_id)
+                            return
+
+                        critical_flags = (
+                            update.status & ChatUpdate.Status.KICKED or
+                            update.status & ChatUpdate.Status.LEFT_GROUP or
+                            update.status & ChatUpdate.Status.CLOSED_VOICE_CHAT or
+                            update.status & ChatUpdate.Status.DISCARDED_CALL or
+                            update.status & ChatUpdate.Status.BUSY_CALL
+                        )
+                        if critical_flags:
+                            LOGGER(__name__).warning(
+                                f"[ChatUpdate] Critical event in Chat {update.chat_id}: {update.status}. Stopping stream."
+                            )
+                            await self.stop_stream(update.chat_id)
+                            return
+
+                    elif isinstance(update, StreamEnded):
+                        if update.stream_type != StreamEnded.Type.AUDIO:
+                            return
+                        LOGGER(__name__).info(f"[StreamEnded] Audio stream ended in Chat: {update.chat_id}")
                         await self.play(client, update.chat_id)
 
                     elif isinstance(update, UpdatedGroupCallParticipant):
                         p = update.participant
                         flags = []
-
                         if p.action.name == "JOINED":
                             flags.append("🟢 Joined")
                         elif p.action.name == "LEFT":
                             flags.append("🔴 Left")
                         else:
                             flags.append("🔄 Updated")
-
                         if p.muted:
                             flags.append("Muted")
                         if p.muted_by_admin:
@@ -565,22 +562,12 @@ class Call:
                             flags.append("Screen Sharing")
                         if p.raised_hand:
                             flags.append("✋ Raised Hand")
-
                         LOGGER(__name__).info(
                             f"[ParticipantUpdate] Chat: {update.chat_id} | User: {p.user_id} | "
                             f"{', '.join(flags)} | Volume: {p.volume}"
                         )
-
-                    elif isinstance(update, ChatUpdate):
-                        if ChatUpdate.Status.LEFT_CALL in update.status:
-                            LOGGER(__name__).warning(
-                                f"[ChatUpdate] Bot left or was removed from call: Chat {update.chat_id} | Status: {update.status}"
-                            )
-                            await self.stop_stream(update.chat_id)
-
                 except Exception as e:
-                    LOGGER(__name__).error(
-                        f"[UnifiedHandler Error] Update: {type(update).__name__} | Error: {e}"
-                    )
+                    LOGGER(__name__).error(f"[UnifiedUpdateHandler Error] {type(update).__name__} | {e}")
+
 
 Jarvis = Call()
