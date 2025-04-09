@@ -6,33 +6,33 @@ from pyrogram import filters
 # Load environment variables from .env file
 load_dotenv()
 
-API_ID = 27798659
-API_HASH = '26100c77cee02e5e34b2bbee58440f86'
-BOT_TOKEN = '6805811918:AAFN67TXzXyvzf2vGu9NcT6hI9YI0dYJzsM'
+API_ID = int(getenv("API_ID"))
+API_HASH = getenv("API_HASH")
+BOT_TOKEN = getenv("BOT_TOKEN")
 
-OWNER_USERNAME = getenv("OWNER_USERNAME", "JARVIS_V2")
-BOT_USERNAME = getenv("BOT_USERNAME", "AnnieMusicRobot")
-BOT_NAME = getenv("BOT_NAME", "˹𝐀ɴɴɪᴇ ✘ 𝙼ᴜsɪᴄ˼ ♪")
+OWNER_USERNAME = getenv("OWNER_USERNAME", "CertifiedCoder")
+BOT_USERNAME = getenv("BOT_USERNAME", "TuneviaBot")
+BOT_NAME = getenv("BOT_NAME", "˹ᴛᴜɴᴇ ᴠɪᴀ ✘ ʙᴏᴛ˼ ♪")
 ASSUSERNAME = getenv("ASSUSERNAME", "musicxannie")
 EVALOP = list(map(int, getenv("EVALOP", "6797202080").split()))
-MONGO_DB_URI = getenv("MONGO_DB_URI", 'mongodb+srv://AnnieV2:vps24@annienew12th.g2xya.mongodb.net/?retryWrites=true&w=majority&appName=AnnieNew12th')
-LOGGER_ID = int(getenv("LOGGER_ID", -1002014167331))
+MONGO_DB_URI = getenv("MONGO_DB_URI", '')
+LOGGER_ID = int(getenv("LOGGER_ID"))
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 
-GPT_API = getenv("GPT_API", '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')
-DEEP_API = getenv("DEEP_API", '88052311-be39-4e2d-9f37-b4d18597c8c5')
+GPT_API = getenv("GPT_API", '')
+DEEP_API = getenv("DEEP_API", '')
 OWNER_ID = int(getenv("OWNER_ID", 7044783841))
 
 # Heroku deployment settings - Refer to Heroku documentation on how to obtain these
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
-UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/doraemon890/KISHU-X-MUSIC")
+UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github/CertifiedCoders/TuneViaBot/")
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "Master")
-GIT_TOKEN = getenv("GIT_TOKEN", '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')
+GIT_TOKEN = getenv("GIT_TOKEN", '')
 
 # Support and contact information - Provide your own support channels
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/JARVIS_V_SUPPORT")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/Dora_Hub")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/CertifiedCodes")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/CertifiedCoders")
 
 # Server limits and configurations - These can be set based on your server configurations
 SERVER_PLAYLIST_LIMIT = int(getenv("SERVER_PLAYLIST_LIMIT", "3000"))
@@ -50,7 +50,7 @@ TG_AUDIO_FILESIZE_LIMIT = int(getenv("TG_AUDIO_FILESIZE_LIMIT", "5242880000"))
 TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", "5242880000"))
 
 # Pyrogram session strings - You need to generate these yourself
-STRING1 = getenv("STRING_SESSION", 'BQGoLIMAVZQBK1e90tu0kK4maxBBk7JLggO8dMiTaHCUIsV4tc_4DiS-Tfwxg7FV53BbkuK0w4xHeFfig9vaHD1QEuIQSCErUskThjTVdZnEG40kwuSRJ1aH4xeYHQ4-wqSSg0kfHSkXWgHm34csTO8uwco-0EAhpFlOrEIlysLWhd1zVsyhk-d5gqlxY-WUqlNWXCnp5vVXL-p6AJ3qRyZkaInVLm-IuuMPcIP4uYLOCfXYtBsw1p6kX1Lvcr7ck4dnf_-8OVQKCwRdBmJtMHAeE16lRKiSvhxlfyG_t_QhzizNWGMsBaa7qdZYmgf2K4U4Q-Xp5XnrP2Adg-yrPWOtOiqwCQAAAAGs3dgGAA')
+STRING1 = getenv("STRING_SESSION", None)
 STRING2 = getenv("STRING_SESSION2", None)
 STRING3 = getenv("STRING_SESSION3", None)
 STRING4 = getenv("STRING_SESSION4", None)
@@ -63,8 +63,8 @@ AYU = [
 ]
 
 AYUV = [
-    "ʜᴇʟʟᴏ {0}, 🥀\n\n ɪᴛ'ꜱ ᴍᴇ {1} !\n\n┏━━━━━━━━━━━━━━━━━⧫\n┠ ◆ ꜱᴜᴘᴘᴏʀᴛɪɴɢ ᴘʟᴀᴛꜰᴏʀᴍꜱ : ʏᴏᴜᴛᴜʙᴇ, ꜱᴘᴏᴛɪꜰʏ,\n┠ ◆ ʀᴇꜱꜱᴏ, ᴀᴘᴘʟᴇᴍᴜꜱɪᴄ , ꜱᴏᴜɴᴅᴄʟᴏᴜᴅ ᴇᴛᴄ.\n┗━━━━━━━━━━━━━━━━━⧫\n┏━━━━━━━━━━━━━━━━━⧫\n┠ ➥ Uᴘᴛɪᴍᴇ : {2}\n┠ ➥ SᴇʀᴠᴇʀSᴛᴏʀᴀɢᴇ : {3}\n┠ ➥ CPU Lᴏᴀᴅ : {4}\n┠ ➥ RAM Cᴏɴsᴜᴘᴛɪᴏɴ : {5}\n┠ ➥ ᴜꜱᴇʀꜱ : {6}\n┠ ➥ ᴄʜᴀᴛꜱ : {7}\n┗━━━━━━━━━━━━━━━━━⧫\n\n🫧 ᴅᴇᴠᴇʟᴏᴩᴇʀ 🪽 ➪ [🇯𝗔𝗥𝗩𝗜𝗦💗](https://t.me/JARVIS_V2)",
-    "ʜɪɪ, {0} ~\n\n◆ ɪ'ᴍ ᴀ {1} ᴛᴇʟᴇɢʀᴀᴍ ꜱᴛʀᴇᴀᴍɪɴɢ ʙᴏᴛ ᴡɪᴛʜ ꜱᴏᴍᴇ ᴜꜱᴇꜰᴜʟ\n◆ ᴜʟᴛʀᴀ ғᴀsᴛ ᴠᴄ ᴘʟᴀʏᴇʀ ꜰᴇᴀᴛᴜʀᴇꜱ.\n\n✨ ꜰᴇᴀᴛᴜʀᴇꜱ ⚡️\n◆ ʙᴏᴛ ғᴏʀ ᴛᴇʟᴇɢʀᴀᴍ ɢʀᴏᴜᴘs.\n◆ Sᴜᴘᴇʀғᴀsᴛ ʟᴀɢ Fʀᴇᴇ ᴘʟᴀʏᴇʀ.\n◆ ʏᴏᴜ ᴄᴀɴ ᴘʟᴀʏ ᴍᴜꜱɪᴄ + ᴠɪᴅᴇᴏ.\n◆ ʟɪᴠᴇ ꜱᴛʀᴇᴀᴍɪɴɢ.\n◆ ɴᴏ ᴘʀᴏᴍᴏ.\n◆ ʙᴇꜱᴛ ꜱᴏᴜɴᴅ Qᴜᴀʟɪᴛʏ.\n◆ 24×7 ʏᴏᴜ ᴄᴀɴ ᴘʟᴀʏ ᴍᴜꜱɪᴄ.\n◆ ᴀᴅᴅ ᴛʜɪꜱ ʙᴏᴛ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴍᴀᴋᴇ ɪᴛ ᴀᴅᴍɪɴ ᴀɴᴅ ᴇɴᴊᴏʏ ᴍᴜꜱɪᴄ 🎵.\n\n┏━━━━━━━━━━━━━━━━━⧫\n┠ ◆ ꜱᴜᴘᴘᴏʀᴛɪɴɢ ᴘʟᴀᴛꜰᴏʀᴍꜱ : ʏᴏᴜᴛᴜʙᴇ, ꜱᴘᴏᴛɪꜰʏ,\n┠ ◆ ʀᴇꜱꜱᴏ, ᴀᴘᴘʟᴇᴍᴜꜱɪᴄ , ꜱᴏᴜɴᴅᴄʟᴏᴜᴅ ᴇᴛᴄ.\n┗━━━━━━━━━━━━━━━━━⧫\n┏━━━━━━━━━━━━━━━━━⧫\n┠ ➥ Uᴘᴛɪᴍᴇ : {2}\n┠ ➥ SᴇʀᴠᴇʀSᴛᴏʀᴀɢᴇ : {3}\n┠ ➥ CPU Lᴏᴀᴅ : {4}\n┠ ➥ RAM Cᴏɴsᴜᴘᴛɪᴏɴ : {5}\n┠ ➥ ᴜꜱᴇʀꜱ : {6}\n┠ ➥ ᴄʜᴀᴛꜱ : {7}\n┗━━━━━━━━━━━━━━━━━⧫\n\n🫧 ᴅᴇᴠᴇʟᴏᴩᴇʀ 🪽 ➪ [🇯𝗔𝗥𝗩𝗜𝗦💗](https://t.me/JARVIS_V2)",
+    "ʜᴇʟʟᴏ {0}, 🥀\n\n ɪᴛ'ꜱ ᴍᴇ {1} !\n\n┏━━━━━━━━━━━━━━━━━⧫\n┠ ◆ ꜱᴜᴘᴘᴏʀᴛɪɴɢ ᴘʟᴀᴛꜰᴏʀᴍꜱ : ʏᴏᴜᴛᴜʙᴇ, ꜱᴘᴏᴛɪꜰʏ,\n┠ ◆ ʀᴇꜱꜱᴏ, ᴀᴘᴘʟᴇᴍᴜꜱɪᴄ , ꜱᴏᴜɴᴅᴄʟᴏᴜᴅ ᴇᴛᴄ.\n┗━━━━━━━━━━━━━━━━━⧫\n┏━━━━━━━━━━━━━━━━━⧫\n┠ ➥ Uᴘᴛɪᴍᴇ : {2}\n┠ ➥ SᴇʀᴠᴇʀSᴛᴏʀᴀɢᴇ : {3}\n┠ ➥ CPU Lᴏᴀᴅ : {4}\n┠ ➥ RAM Cᴏɴsᴜᴘᴛɪᴏɴ : {5}\n┠ ➥ ᴜꜱᴇʀꜱ : {6}\n┠ ➥ ᴄʜᴀᴛꜱ : {7}\n┗━━━━━━━━━━━━━━━━━⧫\n\n🫧 ᴅᴇᴠᴇʟᴏᴩᴇʀ 🪽 ➪ [🇯𝗔𝗥𝗩𝗜𝗦💗](https://t.me/CertifiedCoder)",
+    "ʜɪɪ, {0} ~\n\n◆ ɪ'ᴍ ᴀ {1} ᴛᴇʟᴇɢʀᴀᴍ ꜱᴛʀᴇᴀᴍɪɴɢ ʙᴏᴛ ᴡɪᴛʜ ꜱᴏᴍᴇ ᴜꜱᴇꜰᴜʟ\n◆ ᴜʟᴛʀᴀ ғᴀsᴛ ᴠᴄ ᴘʟᴀʏᴇʀ ꜰᴇᴀᴛᴜʀᴇꜱ.\n\n✨ ꜰᴇᴀᴛᴜʀᴇꜱ ⚡️\n◆ ʙᴏᴛ ғᴏʀ ᴛᴇʟᴇɢʀᴀᴍ ɢʀᴏᴜᴘs.\n◆ Sᴜᴘᴇʀғᴀsᴛ ʟᴀɢ Fʀᴇᴇ ᴘʟᴀʏᴇʀ.\n◆ ʏᴏᴜ ᴄᴀɴ ᴘʟᴀʏ ᴍᴜꜱɪᴄ + ᴠɪᴅᴇᴏ.\n◆ ʟɪᴠᴇ ꜱᴛʀᴇᴀᴍɪɴɢ.\n◆ ɴᴏ ᴘʀᴏᴍᴏ.\n◆ ʙᴇꜱᴛ ꜱᴏᴜɴᴅ Qᴜᴀʟɪᴛʏ.\n◆ 24×7 ʏᴏᴜ ᴄᴀɴ ᴘʟᴀʏ ᴍᴜꜱɪᴄ.\n◆ ᴀᴅᴅ ᴛʜɪꜱ ʙᴏᴛ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴍᴀᴋᴇ ɪᴛ ᴀᴅᴍɪɴ ᴀɴᴅ ᴇɴᴊᴏʏ ᴍᴜꜱɪᴄ 🎵.\n\n┏━━━━━━━━━━━━━━━━━⧫\n┠ ◆ ꜱᴜᴘᴘᴏʀᴛɪɴɢ ᴘʟᴀᴛꜰᴏʀᴍꜱ : ʏᴏᴜᴛᴜʙᴇ, ꜱᴘᴏᴛɪꜰʏ,\n┠ ◆ ʀᴇꜱꜱᴏ, ᴀᴘᴘʟᴇᴍᴜꜱɪᴄ , ꜱᴏᴜɴᴅᴄʟᴏᴜᴅ ᴇᴛᴄ.\n┗━━━━━━━━━━━━━━━━━⧫\n┏━━━━━━━━━━━━━━━━━⧫\n┠ ➥ Uᴘᴛɪᴍᴇ : {2}\n┠ ➥ SᴇʀᴠᴇʀSᴛᴏʀᴀɢᴇ : {3}\n┠ ➥ CPU Lᴏᴀᴅ : {4}\n┠ ➥ RAM Cᴏɴsᴜᴘᴛɪᴏɴ : {5}\n┠ ➥ ᴜꜱᴇʀꜱ : {6}\n┠ ➥ ᴄʜᴀᴛꜱ : {7}\n┗━━━━━━━━━━━━━━━━━⧫\n\n🫧 ᴅᴇᴠᴇʟᴏᴩᴇʀ 🪽 ➪ [🇯𝗔𝗥𝗩𝗜𝗦💗](https://t.me/CertifiedCoder)",
 ]
 
 BANNED_USERS = filters.user()

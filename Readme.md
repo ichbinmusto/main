@@ -7,7 +7,7 @@
 
 <h1 align ="center"><img src="https://readme-typing-svg.herokuapp.com?color=F778A1&width=350&lines=✨+🦋˹𝙺ɪsʜᴜ+✘+𝙼ᴜsɪᴄ˼+🖤+🥀"></b></h1>
 
-<p align="center"><a href="https://t.me/JARVIS_V2"><img src="https://telegra.ph/file/cd02e62dea09e7514c45f.jpg" width="600"></a></p>
+<p align="center"><a href="https://t.me/CertifiedCoder"><img src="https://telegra.ph/file/cd02e62dea09e7514c45f.jpg" width="600"></a></p>
 
 <h2 align="center">
     ─「 💗sᴛʀɪɴɢ sᴇssɪᴏɴ🦋 」─
@@ -75,7 +75,7 @@ Press `Ctrl+C` when you're done with editing env and `:wq` to save the env<br>
 <summary><b>sᴜᴩᴩᴏʀᴛ</b></summary>
 <br>
 
-<a href="https://t.me/JARVIS_V2"><img title="Telegram" src="https://img.shields.io/badge/JARVIS-%23000000.svg?&style=for-the-badge&logo=telegram&logoColor=61DAFB"></a>
+<a href="https://t.me/CertifiedCoder"><img title="Telegram" src="https://img.shields.io/badge/JARVIS-%23000000.svg?&style=for-the-badge&logo=telegram&logoColor=61DAFB"></a>
 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hackerdoraemon2@gmail.com"><img title="GMAIL" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"></a>
 <a href="https://youtube.com/@rajnisha3"><img title="Youtube" src="https://img.shields.io/badge/youtube-%230077B5.svg?&style=for-the-badge&logo=youtube&logoColor=white"></a>
 <a href="https://instagram.com/_rajnish_mishra____"><img title="Instagram" src="https://img.shields.io/badge/instagram-%23E4405F.svg?&style=for-the-badge&logo=instagram&logoColor=white"></a>
