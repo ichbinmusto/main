@@ -1,85 +1,183 @@
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
-<h3><img  style="align-item" :"center" src="https://telegra.ph/file/fbd55ee956abef2a74e15.jpg" width="80px" height="70%"><img src="https://readme-typing-svg.herokuapp.com?color=00BFFF&width=620&lines=✨+🦋+𝐇𝐄𝐘+𝐓𝐇𝐄𝐑𝐄+𝐓𝐇𝐈𝐒+𝐈𝐒+𝐕𝐈𝐏+𝐑𝐀𝐉𝐍𝐈𝐒𝐇+𝐗𝐃+🖤+🥀"></b></h3>
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+<!-- ✨ Animated Header (Top) -->
 <p align="center">
-    <b>ᴠɪsɪᴛᴏʀs</b><br>
- -->    <img align="middle" src="https://profile-counter.glitch.me/doraemon890/count.svg" />
+  <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" />
+</p>
 
-<h1 align ="center"><img src="https://readme-typing-svg.herokuapp.com?color=F778A1&width=350&lines=✨+🦋˹𝙺ɪsʜᴜ+✘+𝙼ᴜsɪᴄ˼+🖤+🥀"></b></h1>
+<!-- 👤 Avatar + Typing Banner -->
+<div align="center">
+  <table>
+    <tr>
+      <td width="100px" align="center">
+        <img src="https://files.catbox.moe/r2ga8f.jpg" width="90px" style="border-radius: 50%;" />
+      </td>
+      <td>
+        <img src="https://readme-typing-svg.herokuapp.com?color=00BFFF&width=600&lines=✨+🧳+Hey+There,+This+is+Certified+Coder+%f0%9f%a5%80+%e2%9d%97%ef%b8%8f" />
+      </td>
+    </tr>
+  </table>
+</div>
 
-<p align="center"><a href="https://t.me/CertifiedCoder"><img src="https://telegra.ph/file/cd02e62dea09e7514c45f.jpg" width="600"></a></p>
+<!-- 👁 Visitor Counter -->
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=CertifiedCoders&style=flat-square" />
+</p>
 
-<h2 align="center">
-    ─「 💗sᴛʀɪɴɢ sᴇssɪᴏɴ🦋 」─
-</h2>
+---
+
+<h1 align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?color=FF69B4&width=500&lines=🌷+Welcome+to+TuneViaBot+🎶;🚀+The+Ultimate+Telegram+Music+Bot" />
+</h1>
+
+<p align="center">
+  <a href="https://t.me/CertifiedCoders">
+    <img src="https://files.catbox.moe/7udxph.jpg" width="600">
+  </a>
+</p>
+
+---
+
+<p align="center">
+  <a href="https://t.me/TuneViaBot"><img src="https://img.shields.io/badge/Try%20Bot-@TuneViaBot-blue?style=for-the-badge&logo=telegram" /></a>
+  <a href="https://t.me/CertifiedCoders"><img src="https://img.shields.io/badge/Join%20Group-@CertifiedCoders-orange?style=for-the-badge&logo=telegram" /></a>
+  <a href="https://t.me/CertifiedCodes"><img src="https://img.shields.io/badge/Updates%20Channel-@CertifiedCodes-purple?style=for-the-badge&logo=telegram" /></a>
+  <a href="https://t.me/CertifiedCoder"><img src="https://img.shields.io/badge/Owner-@CertifiedCoder-red?style=for-the-badge&logo=telegram" /></a>
+  <a href="mailto:rajnishmishraaa1@gmail.com"><img src="https://img.shields.io/badge/Email-Contact-grey?style=for-the-badge&logo=gmail" /></a>
+  <a href="https://instagram.com/rajnishthegreat"><img src="https://img.shields.io/badge/Instagram-Follow-red?style=for-the-badge&logo=instagram" /></a>
+  <a href="https://youtube.com/@rajnisha3"><img src="https://img.shields.io/badge/YouTube-Subscribe-red?style=for-the-badge&logo=youtube" /></a>
+</p>
+
+---
+
+## 🌟 What is TuneViaBot?
+
+**TuneViaBot** is a fast, modern, and powerful Telegram music bot that streams songs directly into your group voice chats. Built using **Pyrogram** and **PyTgCalls**, it supports platforms like YouTube, Spotify, Apple Music, and more.
+
+---
+
+## 🚀 Features
+
+| 🌟 Feature              | 🔎 Description |
+|---------------------|-----------------------------|
+| 🎶 High-Quality Music | Lag-free, HD streaming to voice chats |
+| 🌐 Multi-Source Stream | YouTube, Spotify, direct links, etc. |
+| 🗃️ Cookie Bypass     | Prevent ISP blocks via browser cookies |
+| ⚙️ Full Control       | Inline controls: Play, Pause, Skip, etc. |
+| ☁️ Cloud Ready         | One-click deploy on Heroku & VPS |
+| ⏳ Fast Setup          | Easy interactive installer |
+
+---
+
+## ⛔️ Avoid Streaming Blocks
+
+To prevent YouTube rate limits or throttling, use cookies extracted from your browser.
+
+### 📁 Cookie File Path
+```txt
+Path: Tune/cookies/cookies.txt
+```
+
+### 🔐 Export Tools
+<p align="center">
+  <a href="https://chrome.google.com/webstore/detail/get-cookiestxt/nenlahapcbofgnanklpelkaejcehkggg">
+    <img src="https://img.shields.io/badge/Chrome%20Extension-Get%20cookies.txt-blue?style=for-the-badge&logo=googlechrome" />
+  </a>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/">
+    <img src="https://img.shields.io/badge/Firefox%20Add--on-Get%20cookies.txt-orange?style=for-the-badge&logo=firefox" />
+  </a>
+</p>
+
+---
+
+## 🛡️ VPS Deployment Guide
+
 <details>
-<summary><b>sᴛʀɪɴɢ sᴇssɪᴏɴ</b></summary>
-<br>
-<p align="center"><a href="https://t.me/Strings_Gen_Robot"> <img src="https://img.shields.io/badge/String%20Session-black?style=for-the-badge&logo=replit" width="220" height="38.45"/></a></p>
+<summary><b>Click to view full VPS Setup Instructions</b></summary>
+<br/>
+
+Follow these step-by-step instructions to set up the bot on a VPS or your local machine:
+
+### 🧱 Step 1: Update and Install Core Dependencies
+```bash
+sudo apt update && sudo apt install git curl python3-pip ffmpeg -y
+```
+
+### ⚙️ Step 2: Install Node.js (with NVM)
+```bash
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+source ~/.bashrc
+nvm install node
+```
+
+### 📂 Step 3: Clone the Repository
+```bash
+git clone https://github.com/CertifiedCoders/TuneViaBot
+cd TuneViaBot
+```
+
+### 📦 Step 4: Install Python Requirements
+```bash
+pip3 install -U -r requirements.txt
+```
+
+### 🖥 Step 5: Install Tmux for Background Session
+```bash
+sudo apt install tmux -y
+```
+
+### 🚀 Step 6: Launch Interactive Setup
+```bash
+sudo bash setup
+```
+
+### 🔄 Step 7: Start the Bot in a Persistent Session
+```bash
+tmux new -s tune
+sudo bash start
+```
+
+### 💡 Optional Developer Commands
+```bash
+tmux attach-session -t tune      # Attach to running session
+tmux kill-session -t tune        # Stop bot session
+```
+
+Enjoy smooth, high-quality music streaming with TuneViaBot on your server!
+
+### Run in tmux session
+```bash
+tmux new -s tune
+sudo bash start
+```
 </details>
 
-<h2 align="center">
-    ─「 🦋ᴅᴇᴩʟᴏʏ ᴏɴ ʜᴇʀᴏᴋᴜ💗 」─
-</h2>
-<details>
-<summary><b>ᴅᴇᴩʟᴏʏ ᴏɴ ʜᴇʀᴏᴋᴜ</b></summary>
-<br>
-<p align="center"><a href="http://dashboard.heroku.com/new?template=https://github.com/doraemon890/KISHU-X-MUSIC"> <img src="https://img.shields.io/badge/Deploy%20On%20Heroku-black?style=for-the-badge&logo=heroku" width="220" height="38.45"/></a></p>
-</details>
+---
 
+## 🔐 Deploy & Sessions
 
+| Task                | Link                                                                 |
+|---------------------|----------------------------------------------------------------------|
+| 🔑 Generate Session | <a href="https://t.me/CertifiedSessionBot"><img src="https://img.shields.io/badge/String%20Session-pink?style=for-the-badge&logo=replit" width="180" /></a> |
+| ☁️ Heroku Deploy     | <a href="http://dashboard.heroku.com/new?template=https://github.com/CertifiedCoders/TuneViaBot"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-pink?style=for-the-badge&logo=heroku" width="180" /></a> |
 
-<h2 align="center">
-    ─「 💗ᴅᴇᴩʟᴏʏ ᴏɴ ᴠᴘs 🦋 」─
-</h2>
-<details>
-<summary><b>ᴅᴇᴘʟᴏʏ ᴛᴏ ᴠᴘs</b></summary>
-<br>
-<h3 align="center">
-    ─「 ᴅᴇᴩʟᴏʏ ᴏɴ ʟᴏᴄᴀʟ ʜᴏsᴛ/ ᴠᴘs 」─
-</h3>
+---
 
-- Get your [Necessary Variables](https://github.com/doraemon890/KISHU-X-MUSIC/blob/master/sample.env)
-- Upgrade and Update by :
-`sudo apt-get update && sudo apt-get upgrade -y`
-- Install Ffmpeg by :
-`sudo apt-get install python3-pip ffmpeg -y`
-- Install required packages by :
-`sudo apt-get install python3-pip -y`
-- Install pip by :
-`sudo pip3 install -U pip`
-- Install Node js by :
-`curl -fssL https://deb.nodesource.com/setup_19.x | sudo -E bash - && sudo apt-get install nodejs -y && npm i -g npm`
-- Clone the repository by :
-`git clone https://github.com/doraemon890/KISHU-X-MUSIC && cd Tune`
-- Install requirements by :
-`pip3 install -U -r requirements.txt`
-- Fill your variables in the env by :
-`vi sample.env`<br>
-Press `I` on the keyboard for editing env<br>
-Press `Ctrl+C` when you're done with editing env and `:wq` to save the env<br>
-- Rename the env file by :
-`mv sample.env .env`
-- Install tmux to keep running your bot when you close the terminal by :
-`sudo apt install tmux && tmux`
-- Finally run the bot by :
-`bash start`
-- For getting out from tmux session : Press `Ctrl+b` and then `d`<br>
-━━━━━━━━━━━━━━━━━━━━
- </details>
- 
-<h2 align="center">
-    ─「 🦋sᴜᴩᴩᴏʀᴛ💗 」─
-</h2>
-<details>
-<summary><b>sᴜᴩᴩᴏʀᴛ</b></summary>
-<br>
+## 👥 Support & Community
 
-<a href="https://t.me/CertifiedCoder"><img title="Telegram" src="https://img.shields.io/badge/JARVIS-%23000000.svg?&style=for-the-badge&logo=telegram&logoColor=61DAFB"></a>
-<a href="https://mail.google.com/mail/?view=cm&fs=1&to=hackerdoraemon2@gmail.com"><img title="GMAIL" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"></a>
-<a href="https://youtube.com/@rajnisha3"><img title="Youtube" src="https://img.shields.io/badge/youtube-%230077B5.svg?&style=for-the-badge&logo=youtube&logoColor=white"></a>
-<a href="https://instagram.com/_rajnish_mishra____"><img title="Instagram" src="https://img.shields.io/badge/instagram-%23E4405F.svg?&style=for-the-badge&logo=instagram&logoColor=white"></a>
-<a href="https://t.me/BWANDARLOK"><img title="Support" src="https://img.shields.io/badge/Support-%23000000.svg?&style=for-the-badge&logo=telegram&logoColor=61DAFB"></a>
- </details>
+<p align="center">
+  <a href="https://t.me/CertifiedCoders"><img src="https://img.shields.io/badge/Support%20Group-Join-orange?style=for-the-badge&logo=telegram" /></a>
+  <a href="https://t.me/CertifiedCodes"><img src="https://img.shields.io/badge/Channel-Updates-purple?style=for-the-badge&logo=telegram" /></a>
+  <a href="https://t.me/CertifiedCoder"><img src="https://img.shields.io/badge/Owner-Message-red?style=for-the-badge&logo=telegram" /></a>
+  <a href="https://youtube.com/@rajnisha3"><img src="https://img.shields.io/badge/Youtube-Subscribe-red?style=for-the-badge&logo=youtube" /></a>
+  <a href="https://instagram.com/rajnishthegreat"><img src="https://img.shields.io/badge/Instagram-Follow-pink?style=for-the-badge&logo=instagram" /></a>
+  <a href="mailto:rajnishmishraaa1@gmail.com"><img src="https://img.shields.io/badge/Email-Contact-grey?style=for-the-badge&logo=gmail" /></a>
+</p>
 
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+---
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+</p>
+
+<p align="center">
+  <b>🌟 Crafted with Passion by Certified Coders 🌟</b>
+</p>
