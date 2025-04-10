@@ -47,7 +47,6 @@ class YouTubeAPI:
         messages = [message_1]
         if message_1.reply_to_message:
             messages.append(message_1.reply_to_message)
-
         for message in messages:
             if message.entities:
                 for entity in message.entities:
@@ -144,8 +143,7 @@ class YouTubeAPI:
             link = self.base + link
         link = link.split("&")[0]
         ytdl_opts = {"quiet": True, "cookiefile": cookies_file}
-        ydl = yt_dlp.YoutubeDL(ytdl_opts)
-        with ydl:
+        with yt_dlp.YoutubeDL(ytdl_opts) as ydl:
             formats_available = []
             r = ydl.extract_info(link, download=False)
             for fmt in r.get("formats", []):
@@ -199,11 +197,11 @@ class YouTubeAPI:
                 "no_warnings": True,
                 "cookiefile": cookies_file,
             }
-            x = yt_dlp.YoutubeDL(opts)
-            info = x.extract_info(link, False)
-            path = os.path.join("downloads", f"{info['id']}.{info['ext']}")
-            if not os.path.exists(path):
-                x.download([link])
+            with yt_dlp.YoutubeDL(opts) as x:
+                info = x.extract_info(link, False)
+                path = os.path.join("downloads", f"{info['id']}.{info['ext']}")
+                if not os.path.exists(path):
+                    x.download([link])
             return path
 
         def video_dl():
@@ -216,11 +214,11 @@ class YouTubeAPI:
                 "no_warnings": True,
                 "cookiefile": cookies_file,
             }
-            x = yt_dlp.YoutubeDL(opts)
-            info = x.extract_info(link, False)
-            path = os.path.join("downloads", f"{info['id']}.{info['ext']}")
-            if not os.path.exists(path):
-                x.download([link])
+            with yt_dlp.YoutubeDL(opts) as x:
+                info = x.extract_info(link, False)
+                path = os.path.join("downloads", f"{info['id']}.{info['ext']}")
+                if not os.path.exists(path):
+                    x.download([link])
             return path
 
         def song_video_dl():
@@ -235,8 +233,8 @@ class YouTubeAPI:
                 "merge_output_format": "mp4",
                 "cookiefile": cookies_file,
             }
-            x = yt_dlp.YoutubeDL(opts)
-            x.download([link])
+            with yt_dlp.YoutubeDL(opts) as x:
+                x.download([link])
 
         def song_audio_dl():
             opts = {
@@ -250,12 +248,12 @@ class YouTubeAPI:
                 "postprocessors": [{
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": "mp3",
-                    "preferredquality": "192",
+                    "preferredquality": "320",
                 }],
                 "cookiefile": cookies_file,
             }
-            x = yt_dlp.YoutubeDL(opts)
-            x.download([link])
+            with yt_dlp.YoutubeDL(opts) as x:
+                x.download([link])
 
         if songvideo:
             await loop.run_in_executor(None, song_video_dl)
