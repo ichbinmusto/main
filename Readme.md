@@ -78,7 +78,7 @@ Path: Tune/cookies/cookies.txt
 
 ### 🔐 Export Tools
 <p align="center">
-  <a href="https://chrome.google.com/webstore/detail/get-cookiestxt/nenlahapcbofgnanklpelkaejcehkggg">
+  <a href="https://chromewebstore.google.com/detail/cookie-editor/ookdjilphngeeeghgngjabigmpepanpl">
     <img src="https://img.shields.io/badge/Chrome%20Extension-Get%20cookies.txt-blue?style=for-the-badge&logo=googlechrome" />
   </a>
   <a href="https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/">
