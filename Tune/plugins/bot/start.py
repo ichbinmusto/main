@@ -3,7 +3,7 @@ import random
 import time
 from pyrogram import filters
 from pyrogram.enums import ChatType
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
@@ -28,11 +28,13 @@ from config import BANNED_USERS, AYUV
 from strings import get_string
 
 ANNIE_VID = [
-    "https://github.com/JARVIS-V2/KISHU-X-MUSIC/assets/161505946/33a4ae64-d250-41bc-9c23-49862e6731e2",
+        "https://telegra.ph/file/a4d90b0cb759b67d68644.mp4",
+        "https://telegra.ph/file/72f349b1386d6d9374a38.mp4",
+        "https://telegra.ph/file/2b75449612172a96d4599.mp4",
+        "https://telegra.ph/file/b3ac2d77205d5ded860de.mp4",
 ]
 
 STICKERS = [
-    "CAACAgUAAx0Cd6nKUAACASBl_rnalOle6g7qS-ry-aZ1ZpVEnwACgg8AAizLEFfI5wfykoCR4h4E",
     "CAACAgUAAx0CfL_LsAACCSRl_oru7uW8WAt3-L1pYQWe_1mxawACQw8AAj78MVeb3v2OFvEnNB4E",
     "CAACAgEAAx0Cd6nKUAACATVl_rtAi9KCVQf8vcUC4FMDUfLP8wACHQEAAlEpDTnhphyRDaTrPR4E",
     "CAACAgUAAx0Cd6nKUAACATJl_rsEJOsaaPSYGhU7bo7iEwL8AAPMDgACu2PYV8Vb8aT4_HUPHgQ",
@@ -52,7 +54,7 @@ async def start_pm(client, message: Message, _):
         if name[0:4] == "help":
             keyboard = help_pannel(_)
             sticker_message = await message.reply_sticker(sticker=random.choice(STICKERS))
-            asyncio.create_task(delete_sticker_after_delay(sticker_message, 2))  # Delete sticker after 2 seconds
+            asyncio.create_task(delete_sticker_after_delay(sticker_message, 2))
             await message.reply_video(
                 random.choice(ANNIE_VID),
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
@@ -105,7 +107,7 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
         sticker_message = await message.reply_sticker(sticker=random.choice(STICKERS))
-        asyncio.create_task(delete_sticker_after_delay(sticker_message, 2))  # Delete sticker after 2 seconds
+        asyncio.create_task(delete_sticker_after_delay(sticker_message, 2))
         served_chats = len(await get_served_chats())
         served_users = len(await get_served_users())
         UP, CPU, RAM, DISK = await bot_sys_stats()
