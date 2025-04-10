@@ -5,7 +5,7 @@ from pyrogram.types import ChatJoinRequest
 from Tune import app
 from Tune.misc import SUDOERS
 from Tune.utils.database import get_assistant
-from Tune.utils.decorators import AdminRightsCheck
+from Tune.utils.admin_filters import admin_filter
 
 async def join_userbot(app, chat_id, chat_username=None):
     userbot = await get_assistant(chat_id)
@@ -46,8 +46,8 @@ async def approve_join_request(client, chat_join_request: ChatJoinRequest):
 @app.on_message(
     filters.command(["userbotjoin", "assistantjoin"], prefixes=[".", "/"])
     & (filters.group | filters.private)
+    & admin_filter
 )
-@AdminRightsCheck
 async def join_group(app, message):
     chat_id = message.chat.id
     a = await app.get_me()
@@ -65,9 +65,8 @@ async def join_group(app, message):
 
 
 @app.on_message(
-    filters.command("userbotleave", prefixes=[".", "/"]) & filters.group
+    filters.command("userbotleave", prefixes=[".", "/"]) & filters.group & admin_filter
 )
-@AdminRightsCheck
 async def leave_one(app, message):
     try:
         userbot = await get_assistant(message.chat.id)
