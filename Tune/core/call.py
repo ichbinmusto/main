@@ -520,7 +520,6 @@ class Call:
             async def unified_update_handler(client, update: Update) -> None:
                 try:
                     if isinstance(update, ChatUpdate):
-                        # Handle when the assistant is removed or leaves a call
                         if ChatUpdate.Status.LEFT_CALL in update.status:
                             LOGGER(__name__).warning(
                                 f"[ChatUpdate] Bot left or was removed from call: Chat {update.chat_id} | Status: {update.status}"
@@ -528,7 +527,6 @@ class Call:
                             await self.stop_stream(update.chat_id)
                             return
 
-                        # Check for other critical events
                         critical_flags = (
                             update.status & ChatUpdate.Status.KICKED
                             or update.status & ChatUpdate.Status.LEFT_GROUP
@@ -544,7 +542,6 @@ class Call:
                             return
 
                     elif isinstance(update, StreamEnded):
-                        # Only process audio stream endings.
                         if update.stream_type != StreamEnded.Type.AUDIO:
                             return
                         LOGGER(__name__).info(f"[StreamEnded] Audio stream ended in Chat: {update.chat_id}")
