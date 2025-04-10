@@ -266,7 +266,7 @@ class Call:
                 autoend[chat_id] = datetime.now() + timedelta(minutes=1)
 
 
-    async def play(self, client, chat_id):
+    async def play(self, client: PyTgCalls, chat_id: int) -> None:
         check = db.get(chat_id)
         popped = None
         loop = await get_loop(chat_id)
