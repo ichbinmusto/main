@@ -38,7 +38,7 @@ async def playback(cli, message: Message, _, chat_id):
 
 @app.on_callback_query(filters.regex("SpeedUP") & ~BANNED_USERS)
 @languageCB
-async def del_back_playlist(client, CallbackQuery, _):
+async def manage_callback(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
     chat, speed = callback_request.split("|")
