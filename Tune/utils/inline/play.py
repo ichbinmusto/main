@@ -9,27 +9,6 @@ from Tune.utils.formatters import time_to_seconds
 LAST_UPDATE_TIME = {}
 
 
-def should_update_progress(chat_id):
-    current_time = time.time()
-    last_update = LAST_UPDATE_TIME.get(chat_id, 0)
-    if current_time - last_update >= 6:
-        LAST_UPDATE_TIME[chat_id] = current_time
-        return True
-    return False
-
-def generate_progress_bar(played_sec, duration_sec):
-    if duration_sec == 0:
-        percentage = 0
-    else:
-        percentage = (played_sec / duration_sec) * 100
-    percentage = min(percentage, 100)
-
-    bar_length = 8
-    filled_length = int(round(bar_length * percentage / 100))
-
-    bar = '▰' * filled_length + '▱' * (bar_length - filled_length)
-    return bar
-
 def track_markup(_, videoid, user_id, channel, fplay):
     buttons = [
         [
@@ -52,20 +31,43 @@ def track_markup(_, videoid, user_id, channel, fplay):
     return buttons
 
 
+def should_update_progress(chat_id):
+    current_time = time.time()
+    last_update = LAST_UPDATE_TIME.get(chat_id, 0)
+    if current_time - last_update >= 6:
+        LAST_UPDATE_TIME[chat_id] = current_time
+        return True
+    return False
+
+def generate_progress_bar(played_sec, duration_sec):
+    if duration_sec == 0:
+        percentage = 0
+    else:
+        percentage = (played_sec / duration_sec) * 100
+    percentage = min(percentage, 100)
+
+    bar_length = 8
+    filled_length = int(round(bar_length * percentage / 70))
+
+    bar = '▰' * filled_length + '▱' * (bar_length - filled_length)
+    return bar
+
+
 def stream_markup_timer(_, chat_id, played, dur):
+    if not should_update_progress(chat_id):
+        return None
+
     played_sec = time_to_seconds(played)
     duration_sec = time_to_seconds(dur)
     bar = generate_progress_bar(played_sec, duration_sec)
 
     buttons = [
-
         [
             InlineKeyboardButton(
                 text=f"{played} {bar} {dur}",
                 callback_data="GetTimer",
             )
         ],
-
         [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
             InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
