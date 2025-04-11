@@ -29,6 +29,8 @@ from Tune.utils.stream.stream import stream
 # ---------------------------------------------------------------------------
 from yt_dlp import YoutubeDL
 
+cookies_file = "Tune/cookies/cookies.txt"
+
 # Query cache for repeated searches in same chat
 recent_queries = {}
 
@@ -37,6 +39,7 @@ YDL_OPTIONS = {
     "noplaylist": True,
     "quiet": True,
     "skip_download": True,
+    "cookiefile": cookies_file,
 }
 
 async def fast_youtube_search(query: str):
@@ -70,9 +73,8 @@ async def play_commnd(
     url,
     fplay,
 ):
-    """Main command for playing music/video with faster logic."""
+    """Main command for playing music/video"""
 
-    # Single status message
     mystic = await message.reply_text(_["play_2"].format(channel) if channel else _["play_1"])
 
     plist_id = None
